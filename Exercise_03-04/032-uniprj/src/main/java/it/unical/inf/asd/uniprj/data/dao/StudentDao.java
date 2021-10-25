@@ -1,5 +1,6 @@
 package it.unical.inf.asd.uniprj.data.dao;
 
+import it.unical.inf.asd.uniprj.data.dto.StudentValue;
 import it.unical.inf.asd.uniprj.data.entities.Student;
 import it.unical.inf.asd.uniprj.data.entities.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,4 +30,10 @@ public interface StudentDao
   List<Student> findAllByBirthDateBetweenOrderByLastNameDesc(LocalDate from, LocalDate to);
 
   List<Student> findAllByBirthDateLessThanEqualAndFirstNameIsNotNullAndLastNameStartingWithAndWantsNewsletterTrueOrderByGenderAsc(LocalDate date, String lastnameStart);
+
+  @Query("SELECT s.gender AS gender, COUNT(s.id) AS count "
+      + "FROM Student AS s "
+      + "GROUP BY s.gender ORDER BY s.gender")
+  List<StudentValue> countByGenger();
+
 }

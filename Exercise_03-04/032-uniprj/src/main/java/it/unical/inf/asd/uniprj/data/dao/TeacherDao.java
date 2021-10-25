@@ -18,6 +18,13 @@ import java.util.ArrayList;
 @Repository
 public interface TeacherDao extends JpaRepository<Teacher, Long>, JpaSpecificationExecutor<Teacher> {
 
-  
+  default Specification<Teacher> theLastFilter(String... names) {
+    return (Root<Teacher> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) -> {
+      ListJoin<Teacher, Course> courses = root.joinList("courses");
+      ListJoin<Course, Student> students = courses.joinList("students");
+
+      return students.get("firstName").in(names);
+    };
+  }
 
 }
