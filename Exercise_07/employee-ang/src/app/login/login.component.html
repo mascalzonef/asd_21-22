@@ -1,0 +1,16 @@
+<div>
+    <label for="usernameInput">Username:</label>
+    <input type="text" id="usernameInput" placeholder="Username" [(ngModel)] = "username" value="{{username}}" />
+
+    <label for="passwordInput">Password:</label>
+    <input type="password" id="passwordInput" placeholder="Password" [(ngModel)] = "password" />
+
+    <button (click) = doLogin()>Login</button>
+</div>
+<br /><br />
+
+<div *ngIf="showMessage">
+    <ng-container *ngIf="isAuthenticated; then thenBlock else elseBlock"></ng-container>
+    <ng-template #thenBlock>{{infoMessage}}</ng-template>
+    <ng-template #elseBlock>{{errorMessage}}</ng-template>
+</div>
